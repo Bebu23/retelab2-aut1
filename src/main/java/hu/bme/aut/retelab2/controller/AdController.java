@@ -37,4 +37,9 @@ public class AdController {
         else
             return ResponseEntity.ok(updated);
     }
+
+    @GetMapping("/{tag}")
+    public List<Ad> searchByTag(@PathVariable String tag) {
+        return adRepository.findByTag(tag);
+    }
 }

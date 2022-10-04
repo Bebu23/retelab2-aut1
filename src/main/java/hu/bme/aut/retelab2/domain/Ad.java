@@ -3,7 +3,9 @@ package hu.bme.aut.retelab2.domain;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Ad {
@@ -20,6 +22,9 @@ public class Ad {
 
     @CreationTimestamp
     private Date createdDate;
+
+    @ElementCollection
+    private List<String> tags = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -67,5 +72,13 @@ public class Ad {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }

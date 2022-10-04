@@ -41,4 +41,14 @@ public class AdRepository {
         save(updated);
         return updated;
     }
+
+    public List<Ad> findByTag(String tag) {
+        List<Ad> result = em.createQuery("select a from Ad a where ?1 member a.tags", Ad.class)
+                .setParameter(1, tag)
+                .getResultList();
+        for (Ad ad : result) {
+            ad.setSecret(null);
+        }
+        return result;
+    }
 }
