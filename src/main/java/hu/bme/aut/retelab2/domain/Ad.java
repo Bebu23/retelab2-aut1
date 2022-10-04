@@ -16,6 +16,7 @@ public class Ad {
     private String title;
     private String description;
     private int price;
+    private String secret;
 
     @CreationTimestamp
     private Date createdDate;
@@ -58,5 +59,13 @@ public class Ad {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 }
