@@ -1,8 +1,10 @@
 package hu.bme.aut.retelab2.domain;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,9 @@ public class Ad {
 
     @ElementCollection
     private List<String> tags = new ArrayList<>();
+
+    @Nullable
+    private LocalDateTime expiryDate;
 
     public Long getId() {
         return id;
@@ -80,5 +85,10 @@ public class Ad {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    @Nullable
+    public LocalDateTime getExpiryDate() {
+        return expiryDate;
     }
 }

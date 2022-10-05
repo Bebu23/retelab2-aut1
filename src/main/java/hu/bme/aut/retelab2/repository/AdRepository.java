@@ -2,11 +2,13 @@ package hu.bme.aut.retelab2.repository;
 
 import hu.bme.aut.retelab2.SecretGenerator.SecretGenerator;
 import hu.bme.aut.retelab2.domain.Ad;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -35,7 +37,7 @@ public class AdRepository {
     @Transactional
     public Ad updateAd(Ad updated) {
         Ad found = em.find(Ad.class, updated.getId());
-        if(!updated.getSecret().equals(found.getSecret())){
+        if (!updated.getSecret().equals(found.getSecret())) {
             return null;
         }
         save(updated);
@@ -50,5 +52,16 @@ public class AdRepository {
             ad.setSecret(null);
         }
         return result;
+    }
+
+    @Scheduled(fixedDelay = 6000)
+    @Transactional
+    public void deleteOldEntries() {
+        List<Ad> forDeletion = em.createQuery("select a from Ad a where a.expiryDate < ?1", Ad.class)
+                .setParameter(1, LocalDateTime.now())
+                .getResultList();
+        for (Ad ad : forDeletion) {
+            em.remove(ad);
+        }
     }
 }
